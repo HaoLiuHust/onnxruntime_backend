@@ -89,6 +89,10 @@ RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-4.5.11-Linux-x86
     rm ~/miniconda.sh && \
     /opt/miniconda/bin/conda clean -ya
 
+ENV http_proxy=http://192.168.10.66:10809
+ENV https_proxy=http://192.168.10.66:10809
+RUN git config --global http.proxy http://192.168.10.66:10809 && git config --global https.proxy http://192.168.10.66:10809
+
 # Allow configure to pick up cuDNN where it expects it.
 # (Note: $CUDNN_VERSION is defined by base image)
 RUN _CUDNN_VERSION=$(echo $CUDNN_VERSION | cut -d. -f1-2) && \
