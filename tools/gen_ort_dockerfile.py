@@ -64,6 +64,10 @@ def dockerfile_for_linux(output_file):
 # Ensure apt-get won't prompt for selecting options
 ENV DEBIAN_FRONTEND=noninteractive
 
+ENV http_proxy=http://192.168.10.66:10809
+ENV https_proxy=http://192.168.10.66:10809
+RUN git config --global http.proxy http://192.168.10.66:10809 && git config --global https.proxy http://192.168.10.66:10809
+
 # The Onnx Runtime dockerfile is the collection of steps in
 # https://github.com/microsoft/onnxruntime/tree/master/dockerfiles
 
@@ -88,10 +92,6 @@ RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-4.5.11-Linux-x86
     /bin/bash ~/miniconda.sh -b -p /opt/miniconda && \
     rm ~/miniconda.sh && \
     /opt/miniconda/bin/conda clean -ya
-
-ENV http_proxy=http://192.168.10.66:10809
-ENV https_proxy=http://192.168.10.66:10809
-RUN git config --global http.proxy http://192.168.10.66:10809 && git config --global https.proxy http://192.168.10.66:10809
 
 # Allow configure to pick up cuDNN where it expects it.
 # (Note: $CUDNN_VERSION is defined by base image)
